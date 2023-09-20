@@ -19,5 +19,16 @@
   "bugs": {
     "url": "https://github.com/gineff/todo-app_green-atom_test/issues"
   },
-  "homepage": "https://github.com/gineff/todo-app_green-atom_test#readme"
+  "homepage": "https://github.com/gineff/todo-app_green-atom_test#readme",
+  "scripts": {
+    "lint": "eslint src --ext js --report-unused-disable-directives --max-warnings 0"
+  },
+  "devDependencies": {
+    "eslint": "^8.38.0",
+    "eslint-config-airbnb": "19.0.4",
+    "eslint-config-prettier": "8.8.0",
+    "eslint-plugin-css-modules": "2.11.0",
+    "eslint-plugin-prettier": "4.2.1",
+    "prettier": "2.8.8"
+  }
 }
