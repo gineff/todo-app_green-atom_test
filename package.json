@@ -1,0 +1,23 @@
+{
+  "name": "todo-app_green-atom_test",
+  "public": true,
+  "version": "0.0.0",
+  "description": "todo app, Greenatom test task",
+  "type": "module",
+  "author": "gineff <canone@inbox.ru>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gineff/todo-app_green-atom_test.git"
+  },
+  "keywords": [
+    "todo",
+    "Greenatom",
+    "test",
+    "task"
+  ],
+  "bugs": {
+    "url": "https://github.com/gineff/todo-app_green-atom_test/issues"
+  },
+  "homepage": "https://github.com/gineff/todo-app_green-atom_test#readme"
+}
