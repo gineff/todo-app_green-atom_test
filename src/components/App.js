@@ -71,7 +71,10 @@ export default class App extends Component {
   }
   render() {
     const { markEven, markOdd } = this.state
-    const lastTasksId = Math.max(...this.state.tasks.map(item => item.id)) || 0
+    const lastTasksId = this.state.tasks.length
+      ? Math.max(...this.state.tasks.map(item => item.id))
+      : 0
+    console.log('lastTasksId', lastTasksId)
     /*prettier-ignore */
     return `<div class="todo-app${markEven ? ' markEven' : ''}${markOdd ? ' markOdd' : ''}">
       <Sidebar tasks={{tasks}} activeTag="{{activeTag}}" handleTagSelect={{handleTagSelect}} />

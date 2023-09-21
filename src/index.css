@@ -137,7 +137,7 @@ li {
 }
 
 .task .basket {
-  background-image: url('src/assets/basket.svg');
+  background-image: url('assets/basket.svg');
   background-repeat: no-repeat;
   background-position: center center;
   width: 26px;
