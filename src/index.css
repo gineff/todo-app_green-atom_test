@@ -1,0 +1,83 @@
+:root {
+  --main-color: #ea5959;
+  --main-color-tone: #e84444;
+  --second-color: #fff;
+  --line-color: #d8d8d8;
+  --text-color: #525252;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  outline: none;
+  background-color: var(--main-color);
+  font-family: Lato;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+}
+
+.todo-app {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 983px;
+  min-height: 702px;
+  margin-top: 130px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.25);
+}
+
+.todo-app__sidebar,
+.tag-list {
+  padding-top: 140px;
+  width: 209px;
+  border-right: 1px solid var(--line-color);
+}
+
+.tag-list li {
+  list-style-type: none;
+}
+
+.tag-list__item {
+  color: var(--text-color);
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  cursor: pointer;
+  transition: text-decoration 0.5s;
+}
+
+.tag-list__item:hover {
+  text-decoration: underline;
+}
+
+.tag-list__item_active {
+  color: var(--main-color);
+  font-weight: 700;
+}
+
+.todo-app__list {
+  flex-grow: 1;
+}
+
+.button {
+  border: 1px solid transparent;
+  background-color: var(--main-color);
+  color: var(--second-color);
+  border-radius: 4px;
+  cursor: pointer;
+  min-width: 115px;
+  height: 24px;
+  transition: border-color 0.5s, background-color 0.5s, color 0.5s;
+}
+
+.button:hover {
+  background-color: var(--second-color);
+  border-color: var(--main-color);
+  color: var(--main-color);
+}
