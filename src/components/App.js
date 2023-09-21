@@ -1,57 +1,85 @@
 import Component from '../lib/component.js'
-import { ToDoList } from './ToDoList.js'
+import { TasksList } from './TasksList.js'
 import { Sidebar } from './Sidebar.js'
-//import { Header } from './Header.js'
+import { loadTasks, saveTasks } from '../controllers/taskController.js'
+import { Header } from './Header.js'
+import { Panel } from './Panel.js'
 
 const initialState = {
   tasks: [],
-  counter: 0,
+  activeTag: 'All',
+  markOdd: false,
+  markEven: false,
 }
 
 export default class App extends Component {
   constructor(props) {
-    super({ ...props, ToDoList, Sidebar })
-    /* rerender on state change with js Proxy */
-
+    super({ ...props, Sidebar, TasksList, Header, Panel })
+    /** rerender on state change with js Proxy */
     this.state = new Proxy(this.state, {
       set: (target, prop, value) => {
+        if (prop === 'tasks') {
+          value = value.sort((a, b) => !b.done - !a.done || a.id - b.id)
+          saveTasks(value)
+        }
         target[prop] = value
         this._render()
         return true
       },
     })
+    const tasks = loadTasks()
+    if (tasks) {
+      this.setState({ tasks })
+    }
   }
   getStateFromProps() {
-    const OnTagClick = i => console.log(i)
-    const handleTagSelect = () => {
-      this.setState({ counter: this.state.counter + 1 })
-    }
-    const handleTagChange = i => console.log(i)
-
+    const handleTagSelect = activeTag => this.setState({ activeTag })
     const handleTaskAdd = task =>
-      this.state.setState({ tasks: [...this.state.tasks, task] })
+      this.setState({ tasks: [...this.state.tasks, task] })
+    const handleTaskRemove = ({ id }) =>
+      this.setState({
+        tasks: this.state.tasks.filter(item => item.id !== id),
+      })
     const handleTaskChange = task =>
-      this.state.setState({
+      this.setState({
         tasks: this.state.tasks.map(item =>
           item.id === task.id ? task : item
         ),
       })
 
+    const toggleEvenRows = () =>
+      this.setState({ markEven: !this.state.markEven })
+    const toggleOddRows = () => this.setState({ markOdd: !this.state.markOdd })
+    const removeFirst = () =>
+      this.setState({
+        tasks: [...(this.state.tasks.shift(), this.state.tasks)],
+      })
+    const removeLast = () =>
+      this.setState({ tasks: [...(this.state.tasks.pop(), this.state.tasks)] })
+
     this.state = {
-      tags: ['Active'],
-      activeTagIndex: 0,
-      OnTagClick,
       handleTaskAdd,
+      handleTaskRemove,
       handleTaskChange,
       handleTagSelect,
-      handleTagChange,
+      toggleEvenRows,
+      toggleOddRows,
+      removeFirst,
+      removeLast,
       ...initialState,
     }
   }
   render() {
-    return `<div class="todo-app">
-      <Sidebar list={{tags}} activeTagIndex={{activeTagIndex}} handleTagSelect={{handleTagSelect}} />
-      <section>${this.state.counter}     </section>
+    const { markEven, markOdd } = this.state
+    const lastTasksId = Math.max(...this.state.tasks.map(item => item.id)) || 0
+    /*prettier-ignore */
+    return `<div class="todo-app${markEven ? ' markEven' : ''}${markOdd ? ' markOdd' : ''}">
+      <Sidebar tasks={{tasks}} activeTag="{{activeTag}}" handleTagSelect={{handleTagSelect}} />
+      <section>
+        <Header handleTaskAdd={{handleTaskAdd}} lastTasksId="${lastTasksId}" activeTag="{{activeTag}}" />   
+        <TasksList tasks={{tasks}} handleTaskChange={{handleTaskChange}} handleTaskRemove={{handleTaskRemove}}/>
+        <Panel toggleEvenRows={{toggleEvenRows}}  toggleOddRows={{toggleOddRows}} removeFirst={{removeFirst}} removeLast={{removeLast}}/>
+      </section>
     </div>`
   }
 }

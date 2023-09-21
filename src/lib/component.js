@@ -147,7 +147,7 @@ export default class Component {
       ] = match
 
       let component
-
+      //console.log('block', block)
       if (context) {
         component = getContext(Number(context))
       } else {

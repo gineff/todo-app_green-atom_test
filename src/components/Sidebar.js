@@ -7,20 +7,25 @@ export class Sidebar extends Component {
     super({ ...props, Tag })
   }
   getStateFromProps() {
-    const { children, list, activeTagIndex, handleTagSelect } = this.props
-    this.state = { children, list, activeTagIndex, handleTagSelect }
+    const { tasks, activeTag, handleTagSelect } = this.props
+
+    const tags = [
+      'All',
+      ...new Set(tasks.map(item => item.tag).filter(item => !!item)),
+    ]
+    this.state = { tags, activeTag, handleTagSelect }
   }
   render() {
-    const { list, activeTagIndex } = this.state
+    const { tags, activeTag } = this.state
 
     return `<div class="todo-app__sidebar tag-list">
       <ul>
-        ${list
+        ${tags
           .map(
             (item, index) =>
-              `<li><Tag handleTagSelect={{handleTagSelect}} key="${index}" className="tag-list__item${
-                index === activeTagIndex ? ' tag-list__item_active' : ''
-              }">${item}</Tag></li>`
+              `<Tag handleTagSelect={{handleTagSelect}} key="${index}" className="tag-list__item${
+                item === activeTag ? ' tag-list__item_active' : ''
+              }">${item}</Tag>`
           )
           .join('\n')}
       </ul>
